@@ -14,7 +14,7 @@ spring:
     nacos:
       server-addr: 47.113.188.125:8848
   redis:
-    password: 123456
+    password: ***
     host: 47.113.188.125
     port: 6379
 mybatis-plus:

@@ -1,0 +1,32 @@
+server:
+  port: 8080
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: 47.113.188.125:8848
+    gateway:
+      routes:
+        - id: work6-user
+          uri: lb://work6-user
+          predicates:
+            - Path=/users/**
+        - id: work6-transaction
+          uri: lb://work6-transaction
+          predicates:
+            - Path=/transactions/**
+      default-filters:
+          - AddRequestHeader=truth,anyone long-press like button will be rich
+yuyu:
+  jwt:
+    location: classpath:hmall.jks
+    alias: hmall
+    password: hmall123
+    tokenTTL: 30m
+  auth:
+    excludePaths:
+      - /users/login
+      - /users/register

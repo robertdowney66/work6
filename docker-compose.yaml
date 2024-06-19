@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql
+    container_name: mysql-work6
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123
+      TZ: Asia/Shanghai
+    volumes:
+      - "/root/work6/mysql/conf:/etc/mysql/conf.d"
+      - "/root/work6/mysql/data:/var/lib/mysql"
+      - "/root/mysql/init:/docker-entrypoint-initdb.d"
+    networks:
+      - work6-net
+  redis:
+    image: redis:7.0.12
+    container_name: redis-work6
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - "/root/work6/redis/redis.conf:/etc/redis/redis.conf"
+      - "/root/work6/redis/data:/data"
+    command: redis-server --requirepass 123456
+    networks:
+      - work6-net
+  nacos:
+    image: nacos/nacos-server:v2.1.0-slim
+    environment:
+      JVM XMS: 256m
+      JVM XMX: 256m
+    container_name: nacos-work6
+    restart: always
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    privileged: true
+    env_file:
+      - "/root/work6/nacos/custom.env"
+    depends_on:
+      - mysql
+    networks:
+      - work6-net
+networks:
+  work6-net:
+    name: work6

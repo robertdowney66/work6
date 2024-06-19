@@ -1,0 +1,33 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: work6-transaction # 微服务名称
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://${yuyu.db.host}:3306/work6-transaction?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${yuyu.db.pw}
+  cloud:
+    nacos:
+      server-addr: 47.113.188.125:8848
+  redis:
+    password: 123456
+    host: 47.113.188.125
+    port: 6379
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+  global-config:
+    db-config:
+      update-strategy: not_null
+      id-type: auto
+logging:
+  level:
+    com.yuyu: debug
+  pattern:
+    dateformat: HH:mm:ss:SSS
+  file:
+    path: "logs/${spring.application.name}"

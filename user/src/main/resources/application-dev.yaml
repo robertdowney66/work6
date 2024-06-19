@@ -1,0 +1,4 @@
+yuyu:
+  db:
+    host: mysql
+    pw: 123
